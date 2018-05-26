@@ -19,6 +19,9 @@ class COOPGAME_API ASWeapon : public AActor
 	GENERATED_BODY()
 	
 protected:
+
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	USkeletalMeshComponent* MeshComp;
 
@@ -48,10 +51,26 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* TracerEffect;
 
+	virtual void Fire();
+
+	FTimerHandle TimerHandle_TimeBetweenShots;
+
+	float LastFiredTime;
+
+	/* RPM - Bullets per minute fire by weapon */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	float RateOfFire;
+
+	//Derived from RateOfFire
+	float TimeBetweenShots;
+
+
 public:
 	// Sets default values for this actor's properties
 	ASWeapon();	
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	virtual void Fire();
+	void StartFire();
+
+	void StopFire();
+
 };

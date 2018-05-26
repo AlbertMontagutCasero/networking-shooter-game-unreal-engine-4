@@ -61,9 +61,11 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Player" )
 	FName WeaponAttachSocketName;
 
-	void Fire();
+	void StartFire();
 
-public:	
+	void StopFire();
+
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
