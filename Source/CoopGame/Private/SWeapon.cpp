@@ -77,6 +77,7 @@ void ASWeapon::Fire()
 
 			AActor* HitActor = Hit.GetActor();
 
+			//Derreference weak object ,this save memory
 			EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
 			
 			float ActualDamage = BaseDamage;
@@ -86,8 +87,6 @@ void ASWeapon::Fire()
 			}
 
 			UGameplayStatics::ApplyPointDamage(HitActor, ActualDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DamageType);
-
-			//Derreference weak object ,this save memory
 
 			UParticleSystem* SelectedEfect = nullptr;
 			switch (SurfaceType)
