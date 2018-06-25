@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USpringArmComponent* SprinArmComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USHealthComponent* HealthComp;
+
 	//internal flag to notify if character is zooming or not in tick
 	bool bWantsToZoom;
 
@@ -64,6 +67,13 @@ protected:
 	void StartFire();
 
 	void StopFire();
+
+	UFUNCTION()
+	void OnHealthChanged(USHealthComponent* OwiningHealthComp, float Health, float Healthdelta, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	/* Pawn died previously */
+	UPROPERTY(BlueprintReadOnly, Category = "Player")
+	bool bDied;
 
 public:
 	// Called every frame
