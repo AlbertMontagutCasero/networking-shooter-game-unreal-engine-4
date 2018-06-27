@@ -30,6 +30,8 @@ ASWeapon::ASWeapon()
 	TracerTargetName = "Target";
 
 	RateOfFire = 600;
+
+	SetReplicates(true);
 }
 
 void ASWeapon::BeginPlay()
@@ -42,6 +44,12 @@ void ASWeapon::BeginPlay()
 void ASWeapon::Fire()
 {
 	//Trace the world, from pawn eyes to crosshair location.
+
+	if (Role < ROLE_Authority)
+	{
+		ServerFire(); 
+		return;
+	}
 
 	//Cogemos el propietario del arma (Especificado en la creacion del arma).
 	AActor* MyOwner = GetOwner();
@@ -118,6 +126,16 @@ void ASWeapon::Fire()
 
 		LastFiredTime = GetWorld()->TimeSeconds;
 	}
+}
+
+void ASWeapon::ServerFire_Implementation()
+{
+	Fire();
+}
+
+bool ASWeapon::ServerFire_Validate()
+{
+	return true;
 }
 
 void ASWeapon::StartFire()

@@ -56,6 +56,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Player")
 	float DefaultFOV;
 
+	UPROPERTY(Replicated) // LEARN: Esto replicara la propiedad a todos los clientes de manera que cuando se actualice, esto ademas necesita de la funcion "GetLifeTimeReplicatedProps"
 	ASWeapon* CurrentWeapon;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Player")
