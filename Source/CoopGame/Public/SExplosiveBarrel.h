@@ -37,7 +37,11 @@ protected:
 	void OnHealthChanged(USHealthComponent* OwiningHealthComp, float Health, float Healthdelta, 
 		const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 
+	UPROPERTY(ReplicatedUsing=OnRep_Exploded)
 	bool bExploded;
+
+	UFUNCTION()
+	void OnRep_Exploded();
 
 	UPROPERTY(EditDefaultsOnly, Category = "FX")
 	float ExplosionImpulse;

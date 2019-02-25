@@ -11,6 +11,23 @@ class UDamageType;
 class UParticleSystem;
 
 /**
+ * Contains information of a single hit scan weapon line trace
+ */
+USTRUCT()
+struct FHitScanTrace
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY()
+	TEnumAsByte<EPhysicalSurface> SurfaceType;
+
+	UPROPERTY()
+	FVector_NetQuantize TraceTo;
+};
+
+/**
  * Rifle de asalto standard
  */
 UCLASS()
@@ -26,6 +43,8 @@ protected:
 	USkeletalMeshComponent* MeshComp;
 
 	void PlayFireEffects(FVector TraceEnd);
+	
+	void PlayImpactEffects(EPhysicalSurface SurfaceType, FVector ImpactPoint);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Weapon")
 	TSubclassOf<UDamageType> DamageType;
@@ -67,6 +86,11 @@ protected:
 	//Derived from RateOfFire
 	float TimeBetweenShots;
 
+	UPROPERTY(ReplicatedUsing=OnRep_HistScanTrace)
+	FHitScanTrace HitScanTrace;
+
+	UFUNCTION()
+	void OnRep_HistScanTrace();
 
 public:
 	// Sets default values for this actor's properties
@@ -75,5 +99,4 @@ public:
 	void StartFire();
 
 	void StopFire();
-
 };
